@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>PS4 + PS5 Dashboard Fake</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{--accent:#1e90ff;}
+*{box-sizing:border-box;font-family:Segoe UI,Arial}
+body{margin:0;background:black;color:white;overflow:hidden}/* BOOT */ #boot{position:fixed;inset:0;background:black;display:flex;flex-direction:column;align-items:center;justify-content:center} #bootLogo{font-size:42px;margin-bottom:20px} #bootButtons{display:flex;gap:15px} #bootButtons button{padding:12px 18px;font-size:16px} #bootBar{display:none;width:240px;height:4px;background:#222;margin-top:25px;border-radius:5px;overflow:hidden} #bootBar span{display:block;height:100%;width:0;background:var(--accent);animation:load 4s linear forwards} @keyframes load{to{width:100%}}
+
+/* DASHBOARDS */ .dashboard{display:none;min-height:100vh;padding:20px} #ps4Dash{background:linear-gradient(160deg,#0a1a3a,#02040a)} #ps5Dash{background:linear-gradient(160deg,#111,#030303)} .header{display:flex;justify-content:space-between;align-items:center} .time{font-size:36px} button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:white;padding:8px 14px;border-radius:10px;cursor:pointer}
+
+.apps{margin-top:30px;display:flex;gap:18px;overflow-x:auto} .app{min-width:160px;height:160px;border-radius:20px;background:linear-gradient(140deg,#1e90ff,#0a3a8f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:.25s} .app:hover{transform:scale(1.05)} .app img{width:72px;height:72px;object-fit:contain;background:#00000055;border-radius:12px;padding:8px}
+
+/* START MENU */ #startMenu{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);align-items:center;justify-content:center} #startBox{background:#0a1028;padding:30px;border-radius:20px;width:280px} #startBox button{width:100%;margin:6px 0}
+
+/* APP / BD-J */ #appScreen,#bdjLog{display:none;position:fixed;inset:0;background:black;align-items:center;justify-content:center;font-size:28px} #bdjLog{color:#00ff9c;font-family:monospace;align-items:flex-start;justify-content:flex-start;padding:20px;white-space:pre-wrap} </style>
+
+</head>
+<body><!-- BOOT --><div id="boot">
+  <div id="bootLogo">PlayStation</div>
+  <div id="bootButtons">
+    <button onclick="selectConsole('PS4')">Iniciar PS4</button>
+    <button onclick="selectConsole('PS5')">Iniciar PS5</button>
+  </div>
+  <div id="bootBar"><span></span></div>
+</div><!-- PS4 DASHBOARD --><div id="ps4Dash" class="dashboard">
+  <div class="header"><div class="time" id="clock4"></div><button onclick="openStart()">☰</button></div>
+  <div class="apps">
+    <div class="app" onclick="openApp('Spider-Man')"><img src="https://upload.wikimedia.org/wikipedia/en/0/02/Spider-Man_PS4_cover.jpg"><span>Spider-Man</span></div>
+    <div class="app" onclick="openApp('God of War')"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg"><span>God of War</span></div>
+    <div class="app" onclick="openApp('Minecraft')"><img src="https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"><span>Minecraft</span></div>
+    <div class="app" onclick="openBDJ()"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Blu-ray_Disc_logo.svg"><span>BD-J</span></div>
+    <div class="app" onclick="openSettings()"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Settings_icon.png"><span>Settings</span></div>
+  </div>
+</div><!-- PS5 DASHBOARD --><div id="ps5Dash" class="dashboard">
+  <div class="header"><div class="time" id="clock5"></div><button onclick="openStart()">☰</button></div>
+  <div class="apps">
+    <div class="app" onclick="openApp('Spider-Man')"><img src="https://upload.wikimedia.org/wikipedia/en/0/02/Spider-Man_PS4_cover.jpg"><span>Spider-Man</span></div>
+    <div class="app" onclick="openApp('God of War')"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg"><span>God of War</span></div>
+    <div class="app" onclick="openApp('Minecraft')"><img src="https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"><span>Minecraft</span></div>
+    <div class="app" onclick="openSettings()"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Settings_icon.png"><span>Settings</span></div>
+  </div>
+</div><!-- START MENU --><div id="startMenu"><div id="startBox">
+  <button onclick="openSettings()">Settings</button>
+  <button onclick="resetConsole()">Restart</button>
+  <button onclick="shutdown()">Shutdown</button>
+  <button onclick="closeStart()">Close</button>
+</div></div><div id="appScreen"></div>
+<div id="bdjLog"></div><script>
+let current=null;
+function selectConsole(t){current=t;bootButtons.style.display='none';bootBar.style.display='block';bootLogo.innerText='PlayStation '+t;setTimeout(start,4200)}
+function start(){boot.style.display='none';if(current==='PS4')ps4Dash.style.display='block';else ps5Dash.style.display='block'}
+function openStart(){startMenu.style.display='flex'}
+function closeStart(){startMenu.style.display='none'}
+function openApp(n){appScreen.style.display='flex';appScreen.innerText=n+' Running...'}
+function openSettings(){appScreen.style.display='flex';appScreen.innerHTML='Settings<br><br><button onclick="closeApp()">Close</button>'}
+function closeApp(){appScreen.style.display='none'}
+function openBDJ(){bdjLog.style.display='block';bdjLog.innerText='[BD-J FAKE]\nPS4-BD-J v1.2\nOpen DVD:/goldhen.bin (fake)\nCopy -> HDD:/sys (fake)\nDone.\n\nBack to PS4 Home'}
+function shutdown(){document.body.innerHTML='<div id="boot"><div id="bootLogo">Power Off</div></div>'}
+function resetConsole(){location.reload()}
+setInterval(()=>{const t=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});clock4.innerText=t;clock5.innerText=t},1000);
+</script></body>
+</html>
